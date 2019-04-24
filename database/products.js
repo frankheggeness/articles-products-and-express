@@ -1,8 +1,8 @@
 (function banana() {
-  let productArray = [{ name: 'test', price: '17 dollars', inventory: '17 units' }];
-
+  let productObject = { products: [{ name: 'test', price: '17 dollars', inventory: '17 units' }] };
+  let productArray = productObject.products;
   let getProductArray = () => {
-    return productArray;
+    return productObject.products;
   };
 
   let postProduct = (body, res) => {

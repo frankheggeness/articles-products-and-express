@@ -1,11 +1,18 @@
 (function banana() {
-  let articleArray = [
-    { title: 'test Title', body: '17 pages', author: '17 units', urlTitle: `${encodeURIComponent('test Title')}` },
-  ];
+  let articleObject = {
+    articles: [
+      { title: 'test Title', body: '17 pages', author: '17 units', urlTitle: `${encodeURIComponent('test Title')}` },
+    ],
+  };
 
-  // const displayArticles = () => {
-  //   res.render('main', articleArray);
-  // };
+  let testObject = {
+    title: 'please work',
+  };
+  let articleArray = articleObject.articles;
+
+  const displayArticles = (res) => {
+    res.render('main', testObject);
+  };
 
   let getArticlesArray = () => {
     return articleArray;
@@ -66,5 +73,6 @@
     postArticle,
     putArticle,
     deleteArticle,
+    displayArticles,
   };
 })();

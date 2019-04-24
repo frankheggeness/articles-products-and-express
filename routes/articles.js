@@ -6,7 +6,7 @@ const articlesArray = articlesData.getArticlesArray();
 router
   .route('/')
   .get((req, res) => {
-    return articlesArray;
+    // articlesData.displayArticles(res);
   })
   .post((req, res) => {
     let body = req.body;
