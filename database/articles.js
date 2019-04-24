@@ -1,21 +1,46 @@
 (function banana() {
   let articleObject = {
     articles: [
-      { title: 'test Title', body: '17 pages', author: '17 units', urlTitle: `${encodeURIComponent('test Title')}` },
+      { title: 'testing', body: '17 pages', author: '17 units', urlTitle: `${encodeURIComponent('test Title')}` },
     ],
   };
 
   let testObject = {
     title: 'please work',
   };
+
   let articleArray = articleObject.articles;
 
-  const displayArticles = (res) => {
-    res.render('main', testObject);
+  // find article
+  const findArticleTitle = (title) => {
+    let index = -1;
+    let formattedArg = title
+      .split(' ')
+      .join('')
+      .toLowerCase();
+
+    articleArray.forEach((article) => {
+      if (
+        article.title
+          .split(' ')
+          .join('')
+          .toLowerCase() === formattedArg
+      ) {
+        return (index = articleArray.indexOf(article));
+      }
+    });
+
+    if (index < 0) {
+      return false;
+    }
+    return index;
   };
 
   let getArticlesArray = () => {
     return articleArray;
+  };
+  let getArticlesObject = () => {
+    return articleObject;
   };
 
   let postArticle = (body, res) => {
@@ -73,6 +98,7 @@
     postArticle,
     putArticle,
     deleteArticle,
-    displayArticles,
+    getArticlesObject,
+    findArticleTitle,
   };
 })();
