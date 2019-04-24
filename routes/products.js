@@ -11,32 +11,15 @@ router
   })
   .post((req, res) => {
     let body = req.body;
-    console.log(body);
-    let newProduct = {};
-    newProduct['name'] = body['name'];
-    newProduct['price'] = body['price'];
-    newProduct['inventory'] = body['inventory'];
-    newProduct['id'] = productArray.length;
-    productArray.push(newProduct);
-    res.send(productArray);
+    productsData.postProduct(body, res);
   })
   .put((req, res) => {
     let body = req.body;
-    let id = body['id'];
-    if (id > productArray.length) {
-      return res.send('id not found');
-    }
-    if (body.name) {
-      productArray[id].name = body.name;
-    }
-    if (body.price) {
-      productArray[id].price = body.price;
-    }
-    if (body.inventory) {
-      productArray[id].inventory = body.inventory;
-    }
-
-    res.send(productArray);
+    productsData.putProduct(body, res);
+  })
+  .delete((req, res) => {
+    let body = req.body;
+    productsData.deleteProduct(body, res);
   });
 // banana
 module.exports = router;
