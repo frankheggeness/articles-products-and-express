@@ -1,18 +1,24 @@
 (function banana() {
-  let productObject = { products: [{ name: 'test', price: '17 dollars', inventory: '17 units' }] };
-  let productArray = productObject.products;
+  let productObject = { products: [{ name: 'test', price: '17 dollars', inventory: '17 units', id: 1 }] };
+
+  let productCounter = 2;
+
   let getProductArray = () => {
     return productObject.products;
   };
 
-  let postProduct = (body, res) => {
+  let getProductObject = () => {
+    return productObject;
+  };
+
+  let postProduct = (body) => {
     let newProduct = {};
     newProduct['name'] = body['name'];
     newProduct['price'] = body['price'];
     newProduct['inventory'] = body['inventory'];
-    newProduct['id'] = productArray.length;
-    productArray.push(newProduct);
-    res.send(productArray);
+    newProduct['id'] = productCounter;
+    productCounter++;
+    getProductArray().push(newProduct);
   };
 
   let putProduct = (body, res) => {
@@ -42,10 +48,23 @@
     return res.redirect('/products');
   };
 
+  let findProduct = (id) => {
+    let productArray = getProductArray();
+    let index = -1;
+    productArray.forEach((product) => {
+      if (product.id === parseInt(id)) {
+        index = productArray.indexOf(product);
+      }
+    });
+    return index;
+  };
+
   module.exports = {
     getProductArray,
     postProduct,
     putProduct,
     deleteProduct,
+    getProductObject,
+    findProduct,
   };
 })();

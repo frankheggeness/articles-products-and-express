@@ -3,7 +3,7 @@ const validator = (req, res, next) => {
   if (req.originalUrl.slice(0, 9) === '/articles') {
     const title = req.params.title;
     const articleDB = require('../database/articles');
-    const database = articleDB.getArticlesArray;
+    // const database = articleDB.getArticlesArray;
 
     // get title
     if (req.method === 'GET' && req.url === `/${title}`) {
