@@ -2,7 +2,7 @@
   let articleObject = {
     articles: [
       {
-        title: 'test test test',
+        title: 'test',
         body: '17 pages',
         author: '17 units',
         urlTitle: `${encodeURIComponent('test Title')}`,

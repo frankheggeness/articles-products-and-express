@@ -17,10 +17,27 @@ router
     articlesData.postArticle(body);
     return res.render('./templates/articles/index', articlesObject);
   });
-
-router.get('/new', middleware.validator, (req, res) => {
+// /new
+router.get('/new', (req, res) => {
   res.status(200);
-  return res.render('./templates/articles/article', data);
+  return res.render('./templates/articles/new', { message: '' });
+});
+
+// /edit
+
+router.get('/:title/edit', (req, res) => {
+  let params = req.params;
+  const articleIndex = articlesData.findArticleTitle(params.title);
+
+  const data = {
+    title: articlesArray[articleIndex].title,
+    author: articlesArray[articleIndex].author,
+    body: articlesArray[articleIndex].body,
+  };
+
+  res.status(200);
+
+  return res.render('./templates/articles/edit', data);
 });
 
 // /:title get

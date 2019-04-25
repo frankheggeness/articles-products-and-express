@@ -16,19 +16,45 @@ router
     productsData.postProduct(body);
     res.status(200);
     return res.render('./templates/products/index', productsData.getProductObject());
-  })
-  .put((req, res) => {
-    let body = req.body;
-    productsData.putProduct(body, res);
-  })
-  .delete((req, res) => {
-    let body = req.body;
-    productsData.deleteProduct(body, res);
   });
+// .put((req, res) => {
+//   let body = req.body;
+//   productsData.putProduct(body, res);
+// })
+// .delete((req, res) => {
+//   let body = req.body;
+//   productsData.deleteProduct(body, res);
+// });
 
+// /new
 router.get('/new', middleware.validator, (req, res) => {
   res.status(200);
+  return res.render('./templates/products/new', productsData.getProductObject());
+});
+
+router.post('/new', (req, res) => {
+  let body = req.body;
+  productsData.postProduct(body);
+  res.status(200);
   return res.render('./templates/products/index', productsData.getProductObject());
+});
+
+// /edit
+
+router.get('/:id/edit', (req, res) => {
+  let params = req.params;
+  const productIndex = productsData.findProduct(params.id);
+
+  const data = {
+    name: productArray[productIndex].name,
+    price: productArray[productIndex].price,
+    inventory: productArray[productIndex].inventory,
+    id: productArray[productIndex].id,
+  };
+
+  res.status(200);
+
+  return res.render('./templates/products/edit', data);
 });
 
 router.get('/:id', middleware.validator, (req, res) => {
