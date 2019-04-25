@@ -8,7 +8,9 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.engine('.hbs', exphbs({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
+const methodOverride = require('method-override');
 
+app.use(methodOverride('_method'));
 app.use('/articles', articles);
 app.use('/products', products);
 

@@ -3,11 +3,14 @@ const router = express.Router();
 const productsData = require('../database/products.js');
 const middleware = require('../middleware/validator.js');
 let productArray = productsData.getProductArray();
+let productObject = productsData.getProductObject();
 let productArrayLength = productArray.length;
+const methodOverride = require('method-override');
 
 router
   .route('/')
   .get((req, res) => {
+    productObject.message = '';
     res.status(200);
     return res.render('./templates/products/index', productsData.getProductObject());
   })
@@ -17,14 +20,6 @@ router
     res.status(200);
     return res.render('./templates/products/index', productsData.getProductObject());
   });
-// .put((req, res) => {
-//   let body = req.body;
-//   productsData.putProduct(body, res);
-// })
-// .delete((req, res) => {
-//   let body = req.body;
-//   productsData.deleteProduct(body, res);
-// });
 
 // /new
 router.get('/new', middleware.validator, (req, res) => {

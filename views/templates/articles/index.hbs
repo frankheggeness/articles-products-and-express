@@ -17,6 +17,11 @@
   <h3>by: {{author}}</h3>
   <p>{{body}}</p>
   </br>
+  <form method="Get" action="/articles/{{title}}">
+
+    <input type="submit" value="Go to article page">
+  </form>
+
   {{/each}}
 
   {{>footer}}

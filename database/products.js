@@ -1,5 +1,5 @@
 (function banana() {
-  let productObject = { products: [{ name: 'test', price: '17 dollars', inventory: '17 units', id: 1 }] };
+  let productObject = { products: [{ name: 'test', price: '17 dollars', inventory: '17 units', id: 1 }], message: '' };
 
   let productCounter = 2;
 
@@ -19,6 +19,7 @@
     newProduct['id'] = productCounter;
     productCounter++;
     getProductArray().push(newProduct);
+    productObject.message = 'product made successfully';
   };
 
   let putProduct = (body, res) => {

@@ -15,7 +15,14 @@
   <h3>by: {{author}}</h2>
     <p>{{body}}</p>
 
+    <form method="GET" action="/articles/{{title}}/edit">
 
+      <input type="submit" value="EDIT">
+    </form>
+    <form method="Get" action="/articles">
+
+      <input type="submit" value="Back to Articles">
+    </form>
     {{>footer}}
 </body>
 

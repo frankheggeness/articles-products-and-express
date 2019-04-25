@@ -18,6 +18,7 @@
   "homepage": "https://github.com/frankheggeness/articles-products-and-express#readme",
   "dependencies": {
     "express": "^4.16.4",
-    "express-handlebars": "^3.0.2"
+    "express-handlebars": "^3.0.2",
+    "method-override": "^3.0.0"
   }
 }

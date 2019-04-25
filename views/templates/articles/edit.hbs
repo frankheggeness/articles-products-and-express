@@ -10,7 +10,7 @@
 
 <body>
   <h1>Add New Article</h1>
-  <form method="POST" action="/articles">
+  <form method="POST" action="/articles/{{title}}?_method=PUT">
     <label for="title">Title</label>
     </br>
     <input type="text" name="title" id="title" value="{{title}}">
@@ -25,6 +25,11 @@
     </br>
     <input type="submit" value="Submit">
   </form>
+  <form method="POST" action="/articles/{{title}}?_method=DELETE">
+
+    <input type="submit" value="Delete Article">
+  </form>
+
   <p>{{message}}</p>
 </body>
 

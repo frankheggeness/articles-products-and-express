@@ -11,8 +11,18 @@ Let the **tests drive your development** or write your tests after. The choice i
 
 ## Goal
 
-### tl;dr
+### tl;dr## Product Routes
 
+`/products`
+
+- `POST` creates a new product
+  - The incoming request will look like this: `{ name: String, price: String, inventory: String }`
+    - from this request you will save your data as `{ id: Number, name: String, price: Number, inventory: Number }`
+      - **id** is a unique identifier for this item. You will generate this on the server side and it will be used to access specific products with it
+    - If **successful** then redirect the user back to the `/products` route.
+    - If not **successful** then send the user back to the **new** product route, `/products/new` and some way to communicate the error back to the user via templating.
+
+`/products/:id`
 You will be building the core of a Content Management System (CMS). You will be able to create, edit, and remove content. This project will have two types of content, which will be referred to as "Resources" below, `Articles` and `Products`. For each resource you will be creating two sets of routes, a set of Endpoints which respond to POST, PUT, and DELETE methods, and another set which will serve HTML content such as a directory listing, and form for editing a resource, and a form for creating a new resource of a certain type.
 
 Almost every website boils down to managing content.
@@ -151,6 +161,7 @@ Here are some middleware code for you to implement.
 **Analytics Tracker**
 
 - Scope: All incoming requests.
+
   - log to a file all uri that are requested. we need each request on it's own line
     - format: `[method] [uri] [timestamp]`
     - file location: all logs should go into a directory called **logs** and end with the `.log` extension

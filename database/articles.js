@@ -51,6 +51,7 @@
     newArticle['author'] = body['author'];
     newArticle['urlTitle'] = encodeURIComponent(newArticle.title);
     articleArray.push(newArticle);
+    articleObject.message = 'article made successfully';
     // res.send(articleArray);
   };
 

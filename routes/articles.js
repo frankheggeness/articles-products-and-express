@@ -9,6 +9,7 @@ const articlesObject = articlesData.getArticlesObject();
 router
   .route('/')
   .get((req, res) => {
+    articlesObject.message = '';
     res.status(200);
     return res.render('./templates/articles/index', articlesObject);
   })
@@ -17,7 +18,9 @@ router
     articlesData.postArticle(body);
     return res.render('./templates/articles/index', articlesObject);
   });
+
 // /new
+
 router.get('/new', (req, res) => {
   res.status(200);
   return res.render('./templates/articles/new', { message: '' });
@@ -41,6 +44,7 @@ router.get('/:title/edit', (req, res) => {
 });
 
 // /:title get
+
 router.get('/:title', middleware.validator, (req, res) => {
   const params = req.params;
   const articleIndex = articlesData.findArticleTitle(params.title);
