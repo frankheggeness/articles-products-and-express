@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  <link rel="stylesheet" type="text/css" href="../css/styles.css">
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 
 <body>
@@ -19,7 +19,15 @@
   <p>Inventory in stock: {{inventory}}</p>
   <p>ID Number: {{id}}</p>
   </br>
+  <form method="Get" action="/products/{{id}}">
+
+    <input type="submit" value="Go to product page">
+  </form>
   {{/each}}
+  <form method="Get" action="/products/new">
+
+    <input type="submit" value="Create new product">
+  </form>
 
   {{>footer}}
 </body>

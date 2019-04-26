@@ -1,4 +1,29 @@
 body {
-  background-color: #2cb8b8;
+  background-color: #5b9aa0;
   color: black;
-  text-align: center; }
+  text-align: center;
+  margin: 0;
+  font-family: 'Monoton', cursive; }
+
+#navBar {
+  display: flex;
+  justify-content: space-around;
+  background-color: #622569; }
+
+#headerBox {
+  background-color: #622569; }
+
+input[type='button'],
+input[type='submit'],
+input[type='reset'] {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer; }
+
+input[type='text'] {
+  background-color: #3cbc8d;
+  color: white; }

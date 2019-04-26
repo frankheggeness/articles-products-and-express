@@ -19,9 +19,13 @@
   "dependencies": {
     "express": "^4.16.4",
     "express-handlebars": "^3.0.2",
+    "method-override": "^3.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
     "gulp": "^4.0.1",
     "gulp-sass": "^4.0.2",
     "gulp-watch": "^5.0.1",
-    "method-override": "^3.0.0"
+    "mocha": "^6.1.4"
   }
 }

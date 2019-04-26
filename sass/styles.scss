@@ -1,5 +1,39 @@
 body {
-  background-color: rgb(44, 184, 184);
+  background-color: #5b9aa0;
   color: black;
   text-align: center;
+  margin: 0;
+  font-family: 'Monoton', cursive;
+}
+
+#navBar {
+  display: flex;
+  justify-content: space-around;
+  background-color: #622569;
+}
+
+#headerBox {
+  background-color: #622569;
+}
+// .navButton {
+//   background-color: white;
+//   color: black;
+//   border: 2px solid #4caf50; /* Green */
+// }
+
+input[type='button'],
+input[type='submit'],
+input[type='reset'] {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+input[type='text'] {
+  background-color: #3cbc8d;
+  color: white;
 }
