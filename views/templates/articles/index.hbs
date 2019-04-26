@@ -7,17 +7,23 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <link rel="stylesheet" type="text/css" href="/css/styles.css">
+  {{>fonts}}
 </head>
 
 <body>
   {{>header}}
   <p>{{message}}</p>
   <h1>Articles</h1>
+  <form method="Get" action="/articles/new">
+
+    <input type="submit" value="Create new article">
+  </form>
   {{#each articles}}
   <div class="articleBox">
     <h2>{{title}}</h2>
     <h3>by: {{author}}</h3>
     <p>{{body}}</p>
+    <i class="far fa-newspaper"></i>
     </br>
     <form method="Get" action="/articles/{{title}}">
 
@@ -26,10 +32,7 @@
 
   </div>
   {{/each}}
-  <form method="Get" action="/articles/new">
 
-    <input type="submit" value="Create new article">
-  </form>
 
   {{>footer}}
   {{>script}}

@@ -2,9 +2,10 @@
   let articleObject = {
     articles: [
       {
-        title: 'test',
-        body: '17 pages',
-        author: '17 units',
+        title: 'The 17 Theorem: Alphabetical Iteration via Digit Manipulation ',
+        body:
+          'For millenia, scholars have unanimously concluded that cycling through the modern English alphabet was a purely verbal endeavor. However...',
+        author: '十七様',
         urlTitle: `${encodeURIComponent('test Title')}`,
       },
     ],

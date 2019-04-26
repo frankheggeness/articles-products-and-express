@@ -1,7 +1,10 @@
 (function banana() {
-  let productObject = { products: [{ name: 'test', price: '17 dollars', inventory: '17 units', id: 1 }], message: '' };
+  let productObject = {
+    products: [{ name: 'Bananas from 1717 17th Street', price: '17 dollars', inventory: '17 units', id: 17 }],
+    message: '',
+  };
 
-  let productCounter = 2;
+  let productCounter = 18;
 
   let getProductArray = () => {
     return productObject.products;

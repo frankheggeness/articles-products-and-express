@@ -5,52 +5,74 @@ body {
   color: black;
   text-align: center;
   margin: 0;
-  font-family: 'Monoton', cursive;
+  font-family: 'Spinnaker', sans-serif;
 }
 
 #navBar {
+  // align-content: center;
+  align-items: center;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   background-color: $purple;
   top: 0;
-  width: 100%;
+  // width: 100%;
+}
+#welcome {
+  font-size: 25px;
+  padding: 10px 16px;
+  margin: 12px 8px;
 }
 
 #headerBox {
   background-color: $purple;
-  top: 0;
-  width: 100%;
+  // width: 100%;
+  padding: 10px 16px;
+  margin-left: 0%;
+  margin-right: 0%;
+  top: 0px;
 }
-// .navButton {
-//   background-color: white;
-//   color: black;
-//   border: 2px solid #4caf50; /* Green */
-// }
 
 input[type='button'],
 input[type='submit'],
 input[type='reset'] {
+  font-family: 'Spinnaker', sans-serif;
   background-color: white;
   border: none;
   color: black;
   font-size: 20px;
   padding: 16px 32px;
   text-decoration: none;
-  margin: 4px 2px;
+  margin: 12px 8px;
   cursor: pointer;
   border-radius: 3%;
-  border: solid 1px black;
+
+  // remove border
+  padding: 0;
+  border: none;
+  background: none;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+input[type='button']:hover {
+  background-color: #4caf50; /* Green */
+  color: white;
 }
 
 input[type='text'] {
   background-color: #ffeead;
   color: black;
 }
+.fa-box-open,
+.fa-newspaper {
+  font-size: 50px;
+}
 
 .productBox,
 .articleBox {
-  background-color: #ffeead;
-  border: solid 1px black;
+  background-color: white;
+  border-top-style: dashed;
+  // border-bottom-style: dashed;
   margin: 5px;
   padding: 10px;
 }

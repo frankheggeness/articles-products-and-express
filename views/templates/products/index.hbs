@@ -7,18 +7,24 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <link rel="stylesheet" type="text/css" href="/css/styles.css">
+  {{>fonts}}
 </head>
 
 <body>
   {{>header}}
   <p>{{message}}</p>
   <h1>Products</h1>
+  <form method="Get" action="/products/new">
+
+    <input type="submit" value="Create new product">
+  </form>
   {{#each products}}
   <div class="productBox">
     <h2>Name: {{name}}</h2>
     <h3>Price: {{price}}</h3>
     <p>Inventory in stock: {{inventory}}</p>
     <p>ID Number: {{id}}</p>
+    <i class="fas fa-box-open"></i>
     </br>
     <form method="Get" action="/products/{{id}}">
 
@@ -26,10 +32,7 @@
     </form>
   </div>
   {{/each}}
-  <form method="Get" action="/products/new">
 
-    <input type="submit" value="Create new product">
-  </form>
 
   {{>footer}}
   <script src="js/logic.js"></script>
