@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const middleware = require('../middleware/validator.js');
+
 const articlesData = require('../database/articles.js');
 const articlesArray = articlesData.getArticlesArray();
 const articlesObject = articlesData.getArticlesObject();
@@ -45,7 +45,7 @@ router.get('/:title/edit', (req, res) => {
 
 // /:title get
 
-router.get('/:title', middleware.validator, (req, res) => {
+router.get('/:title', (req, res) => {
   const params = req.params;
   const articleIndex = articlesData.findArticleTitle(params.title);
 
@@ -60,7 +60,7 @@ router.get('/:title', middleware.validator, (req, res) => {
 });
 
 // /:title put
-router.put('/:title', middleware.validator, (req, res) => {
+router.put('/:title', (req, res) => {
   const body = req.body;
   const params = req.params;
   const formattedParam = params.title
@@ -77,7 +77,7 @@ router.put('/:title', middleware.validator, (req, res) => {
   return res.redirect(`./${formattedParam}`);
 });
 // title delete
-router.delete('/:title', middleware.validator, (req, res) => {
+router.delete('/:title', (req, res) => {
   const articleTitle = req.params.title;
   const articleIndex = articlesData.findArticleTitle(articleTitle);
 
@@ -86,7 +86,7 @@ router.delete('/:title', middleware.validator, (req, res) => {
   const articles = articlesData.getArticlesObject();
   articles.message = 'Deletion Successful';
   res.status(200);
-  return res.render('./templates/articles/index', articles);
+  return res.redirect('./');
 });
 
 module.exports = router;

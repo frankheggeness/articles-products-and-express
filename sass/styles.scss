@@ -54,14 +54,20 @@ input[type='reset'] {
   transition-duration: 0.4s;
 }
 
-input[type='button']:hover {
-  background-color: #4caf50; /* Green */
-  color: white;
+input[type='submit']:hover {
+  // background-color: #4caf50; /* Green */
+  color: #e9443e;
 }
 
+// input[type='text'] {
+//   background-color: whitesmoke;
+//   color: black;
+// }
 input[type='text'] {
-  background-color: #ffeead;
-  color: black;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
 }
 .fa-box-open,
 .fa-newspaper {
@@ -86,3 +92,14 @@ input[type='text'] {
 .sticky + .content {
   padding-top: 102px;
 }
+
+#smallLogo {
+  width: 100%;
+  height: 10px;
+}
+
+// #smallFootBox {
+//   display: flex;
+//   width: 200px;
+//   height: 120px;
+// }

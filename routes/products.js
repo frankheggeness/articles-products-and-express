@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const productsData = require('../database/products.js');
-const middleware = require('../middleware/validator.js');
+
 let productArray = productsData.getProductArray();
 let productObject = productsData.getProductObject();
 let productArrayLength = productArray.length;
@@ -22,7 +22,7 @@ router
   });
 
 // /new
-router.get('/new', middleware.validator, (req, res) => {
+router.get('/new', (req, res) => {
   res.status(200);
   return res.render('./templates/products/new', productsData.getProductObject());
 });
@@ -52,7 +52,7 @@ router.get('/:id/edit', (req, res) => {
   return res.render('./templates/products/edit', data);
 });
 
-router.get('/:id', middleware.validator, (req, res) => {
+router.get('/:id', (req, res) => {
   const params = req.params;
   const productIndex = productsData.findProduct(params.id);
 
@@ -67,7 +67,7 @@ router.get('/:id', middleware.validator, (req, res) => {
   return res.render('./templates/products/product', data);
 });
 
-router.put('/:id', middleware.validator, (req, res) => {
+router.put('/:id', (req, res) => {
   const body = req.body;
   const params = req.params;
   const productIndex = productsData.findProduct(params.id);
@@ -80,7 +80,7 @@ router.put('/:id', middleware.validator, (req, res) => {
   return res.redirect(`./${params.id}`);
 });
 
-router.delete('/:id', middleware.validator, (req, res) => {
+router.delete('/:id', (req, res) => {
   // const Title = req.params.title;
   let params = req.params;
   const productIndex = productsData.findProduct(params.id);
@@ -90,7 +90,8 @@ router.delete('/:id', middleware.validator, (req, res) => {
   const products = productsData.getProductObject();
   products.message = 'Deletion Successful';
   res.status(200);
-  return res.render('./templates/products/index', products);
+  // return res.render('./templates/products/index', products);
+  return res.redirect('./');
 });
 
 // banana
