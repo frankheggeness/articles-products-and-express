@@ -1,5 +1,5 @@
 body {
-  background-color: #5b9aa0;
+  background-color: whitesmoke;
   color: black;
   text-align: center;
   margin: 0;
@@ -8,22 +8,44 @@ body {
 #navBar {
   display: flex;
   justify-content: space-around;
-  background-color: #622569; }
+  background-color: #ff6f69;
+  top: 0;
+  width: 100%; }
 
 #headerBox {
-  background-color: #622569; }
+  background-color: #ff6f69;
+  top: 0;
+  width: 100%; }
 
 input[type='button'],
 input[type='submit'],
 input[type='reset'] {
-  background-color: #4caf50;
+  background-color: white;
   border: none;
-  color: white;
+  color: black;
+  font-size: 20px;
   padding: 16px 32px;
   text-decoration: none;
   margin: 4px 2px;
-  cursor: pointer; }
+  cursor: pointer;
+  border-radius: 3%;
+  border: solid 1px black; }
 
 input[type='text'] {
-  background-color: #3cbc8d;
-  color: white; }
+  background-color: #ffeead;
+  color: black; }
+
+.productBox,
+.articleBox {
+  background-color: #ffeead;
+  border: solid 1px black;
+  margin: 5px;
+  padding: 10px; }
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%; }
+
+.sticky + .content {
+  padding-top: 102px; }
