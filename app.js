@@ -4,15 +4,20 @@ const PORT = 3000;
 const articles = require('./routes/articles.js');
 const products = require('./routes/products.js');
 const bodyParser = require('body-parser');
+// const router = express.Router();
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.engine('.hbs', exphbs({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
 const methodOverride = require('method-override');
+app.use(express.static('public'));
 
 app.use(methodOverride('_method'));
 app.use('/articles', articles);
 app.use('/products', products);
+app.get('/', (req, res) => {
+  res.render('./templates/main');
+});
 
 const server = app.listen(PORT, () => {
   console.log(`Express app is running at port ${PORT}`);
