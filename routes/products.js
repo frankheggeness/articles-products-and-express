@@ -10,7 +10,11 @@ const methodOverride = require('method-override');
 router
   .route('/')
   .get((req, res) => {
-    productObject.message = '';
+    if (productObject.messageCheck === false) {
+      productObject.message = '';
+    } else {
+      productObject.messageCheck = false;
+    }
     res.status(200);
     return res.render('./templates/products/index', productsData.getProductObject());
   })
@@ -55,6 +59,11 @@ router.get('/:id/edit', (req, res) => {
 router.get('/:id', (req, res) => {
   const params = req.params;
   const productIndex = productsData.findProduct(params.id);
+  if (productIndex === -1) {
+    productObject.message = 'ERROR: Cannot find product';
+    productObject.messageCheck = true;
+    return res.redirect('./');
+  }
 
   const data = {
     name: productArray[productIndex].name,
@@ -81,16 +90,14 @@ router.put('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-  // const Title = req.params.title;
   let params = req.params;
   const productIndex = productsData.findProduct(params.id);
 
   productArray.splice(productIndex, 1);
-
   const products = productsData.getProductObject();
   products.message = 'Deletion Successful';
+  productObject.messageCheck = true;
   res.status(200);
-  // return res.render('./templates/products/index', products);
   return res.redirect('./');
 });
 

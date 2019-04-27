@@ -12,7 +12,7 @@
 
 <body>
   {{>header}}
-  <p>{{message}}</p>
+  <p class="messageBox">{{message}}</p>
   <h1>Products</h1>
   <form method="Get" action="/products/new">
 
@@ -20,7 +20,7 @@
   </form>
   {{#each products}}
   <div class="productBox">
-    <h2>Name: {{name}}</h2>
+    <h2 class="titleFont">Name: {{name}}</h2>
     <h3>Price: {{price}}</h3>
     <p>Inventory in stock: {{inventory}}</p>
     <p>ID Number: {{id}}</p>

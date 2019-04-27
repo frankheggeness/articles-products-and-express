@@ -4,11 +4,12 @@
       {
         title: 'The 17 Theorem: Alphabetical Iteration via Digit Manipulation ',
         body:
-          'For millenia, scholars have unanimously concluded that cycling through the modern English alphabet was a purely verbal endeavor. However...',
+          'For millenia, scholars have unanimously concluded that cycling through the modern English alphabet was a purely verbal endeavor. Until now...',
         author: '十七様',
         urlTitle: `${encodeURIComponent('test Title')}`,
       },
     ],
+    messageCheck: false,
   };
 
   let articleArray = articleObject.articles;
@@ -32,9 +33,6 @@
       }
     });
 
-    if (index < 0) {
-      return false;
-    }
     return index;
   };
 
@@ -52,8 +50,8 @@
     newArticle['author'] = body['author'];
     newArticle['urlTitle'] = encodeURIComponent(newArticle.title);
     articleArray.push(newArticle);
-    articleObject.message = 'article made successfully';
-    // res.send(articleArray);
+    articleObject.message = 'Article made successfully';
+    articleObject.messageCheck = true;
   };
 
   module.exports = {

@@ -9,7 +9,11 @@ const articlesObject = articlesData.getArticlesObject();
 router
   .route('/')
   .get((req, res) => {
-    articlesObject.message = '';
+    if (articlesObject.messageCheck === false) {
+      articlesObject.message = '';
+    } else {
+      articlesObject.messageCheck = false;
+    }
     res.status(200);
     return res.render('./templates/articles/index', articlesObject);
   })
@@ -48,6 +52,11 @@ router.get('/:title/edit', (req, res) => {
 router.get('/:title', (req, res) => {
   const params = req.params;
   const articleIndex = articlesData.findArticleTitle(params.title);
+  if (articleIndex === -1) {
+    articlesObject.message = 'ERROR: Cannot find article';
+    articlesObject.messageCheck = true;
+    return res.redirect('./');
+  }
 
   const data = {
     title: articlesArray[articleIndex].title,
@@ -85,6 +94,7 @@ router.delete('/:title', (req, res) => {
 
   const articles = articlesData.getArticlesObject();
   articles.message = 'Deletion Successful';
+  articles.messageCheck = true;
   res.status(200);
   return res.redirect('./');
 });

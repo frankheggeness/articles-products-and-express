@@ -1,10 +1,11 @@
 (function banana() {
   let productObject = {
-    products: [{ name: 'Bananas from 1717 17th Street', price: '17 dollars', inventory: '17 units', id: 17 }],
+    products: [{ name: 'Bananas from 1717 17th Street', price: '17 dollars', inventory: '17 units', id: 1 }],
     message: '',
+    messageCheck: false,
   };
 
-  let productCounter = 18;
+  let productCounter = 2;
 
   let getProductArray = () => {
     return productObject.products;
@@ -22,13 +23,14 @@
     newProduct['id'] = productCounter;
     productCounter++;
     getProductArray().push(newProduct);
-    productObject.message = 'product made successfully';
+    productObject.message = 'Product made successfully';
   };
 
   let putProduct = (body, res) => {
     let id = body['id'];
     if (id > productArray.length) {
-      return res.send('id not found');
+      getProductObject().message = 'Cannot find ID';
+      return res.render('./templates/products/index', productsData.getProductObject());
     }
     if (body.name) {
       productArray[id].name = body.name;
