@@ -1,105 +1,127 @@
 const express = require('express');
 const router = express.Router();
-const productsData = require('../database/products.js');
+const knex = require('../database/index');
 
-let productArray = productsData.getProductArray();
-let productObject = productsData.getProductObject();
-let productArrayLength = productArray.length;
-const methodOverride = require('method-override');
+router.get('/', (req, res) => {
+  return knex
+    .raw('SELECT * FROM products')
+    .then((products) => {
+      res.status(200);
 
-router
-  .route('/')
-  .get((req, res) => {
-    if (productObject.messageCheck === false) {
-      productObject.message = '';
-    } else {
-      productObject.messageCheck = false;
-    }
-    res.status(200);
-    return res.render('./templates/products/index', productsData.getProductObject());
-  })
-  .post((req, res) => {
-    let body = req.body;
-    productsData.postProduct(body);
-    res.status(200);
-    return res.render('./templates/products/index', productsData.getProductObject());
-  });
-
-// /new
+      return res.render('./templates/products/index', products);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
 router.get('/new', (req, res) => {
   res.status(200);
-  return res.render('./templates/products/new', productsData.getProductObject());
+  return res.render('./templates/products/new');
 });
 
-router.post('/new', (req, res) => {
-  let body = req.body;
-  productsData.postProduct(body);
-  res.status(200);
-  return res.render('./templates/products/index', productsData.getProductObject());
+router.get('/:product_id', (req, res) => {
+  let productId = req.params.product_id;
+  return knex
+    .select('*')
+    .from('products')
+    .where({ id: productId })
+    .then((product) => {
+      if (!product) {
+        res.status(404);
+        throw `{PRODUCT NOT FOUND}`;
+      }
+      return product;
+    })
+    .then((product) => {
+      res.status(200);
+      return res.render('./templates/products/product', product[0]);
+      // res.send(product[0]);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
 });
 
-// /edit
-
-router.get('/:id/edit', (req, res) => {
-  let params = req.params;
-  const productIndex = productsData.findProduct(params.id);
-
-  const data = {
-    name: productArray[productIndex].name,
-    price: productArray[productIndex].price,
-    inventory: productArray[productIndex].inventory,
-    id: productArray[productIndex].id,
-  };
-
-  res.status(200);
-
-  return res.render('./templates/products/edit', data);
+router.post('/', (req, res) => {
+  let idNum;
+  knex
+    .select('id')
+    .from('products')
+    .then((ids) => {
+      idNum = ids.length + 1;
+    });
+  let inputData = req.body;
+  return knex
+    .select('name')
+    .from('products')
+    .where({ name: inputData.name })
+    .then((product) => {
+      if (!product || !product.rowCount) {
+        return knex('products')
+          .insert({
+            name: inputData.name,
+            price: inputData.price,
+            inventory: inputData.inventory,
+            id: idNum,
+          })
+          .returning('*');
+      }
+      res.status(400);
+      throw `{product EXISTS}`;
+    })
+    .then((madeProduct) => {
+      res.status(200);
+      // res.send(madeProduct);
+      return res.redirect(`/products/${madeProduct[0].id}`);
+    })
+    .catch((err) => {
+      res.send('ERR' + err);
+      // res.send(idNum);
+    });
 });
 
-router.get('/:id', (req, res) => {
-  const params = req.params;
-  const productIndex = productsData.findProduct(params.id);
-  if (productIndex === -1) {
-    productObject.message = 'ERROR: Cannot find product';
-    productObject.messageCheck = true;
-    return res.redirect('./');
-  }
-
-  const data = {
-    name: productArray[productIndex].name,
-    price: productArray[productIndex].price,
-    inventory: productArray[productIndex].inventory,
-    id: productArray[productIndex].id,
-  };
-
-  res.status(200);
-  return res.render('./templates/products/product', data);
+router.put('/:product_id', (req, res) => {
+  let inputData = req.body;
+  let productId = req.params.product_id;
+  return knex
+    .raw('SELECT * FROM products WHERE id = ?', [productId])
+    .then((product) => {
+      if (!product || !product.rowCount) {
+        res.status(404);
+        throw `{Product NOT FOUND}`;
+      }
+      return knex.raw(
+        `UPDATE products SET title = ?, description = ?, inventory = ?, price = ?  WHERE id = ? RETURNING *`,
+        [inputData.title, inputData.description, inputData.inventory, inputData.price, product.rows[0].id],
+      );
+    })
+    .then((newProduct) => {
+      res.status(200);
+      res.send(newProduct.rows);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
 });
 
-router.put('/:id', (req, res) => {
-  const body = req.body;
-  const params = req.params;
-  const productIndex = productsData.findProduct(params.id);
-
-  for (var key in body) {
-    productArray[productIndex][key] = body[key];
-  }
-
-  res.status(200);
-  return res.redirect(`./${params.id}`);
+router.delete('/:product_id', (req, res) => {
+  let productId = req.params.product_id;
+  return knex
+    .raw('SELECT * FROM products WHERE id = ?', [productId])
+    .then((product) => {
+      if (!product || !product.rowCount) {
+        res.status(404);
+        throw `{product NOT FOUND}`;
+      }
+      return knex.raw(`DELETE FROM products WHERE id = ? RETURNING *`, [productId]);
+    })
+    .then((newPass) => {
+      res.status(200);
+      res.send(`product ${productId} has been deleted`);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
 });
 
-router.delete('/:id', (req, res) => {
-  let params = req.params;
-  const productIndex = productsData.findProduct(params.id);
-
-  productArray.splice(productIndex, 1);
-  const products = productsData.getProductObject();
-  products.message = 'Deletion Successful';
-  productObject.messageCheck = true;
-  res.status(200);
-  return res.redirect('./');
-});
-
-// banana
 module.exports = router;

@@ -5,7 +5,6 @@ const articles = require('./routes/articles.js');
 const products = require('./routes/products.js');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const analytics = require('./middleware/analytics.js');
 const methodOverride = require('method-override');
 const app = express();
 const knex = require('./database');
