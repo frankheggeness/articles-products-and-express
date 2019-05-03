@@ -42,7 +42,12 @@ _note: we are not using a database, having a folder called db. Later we will com
 **Project Structure Example:**
 ![image](https://cloud.githubusercontent.com/assets/3915598/25292586/7b79a2f0-2672-11e7-8340-fef87ff4cf80.png)
 
-# Routes
+# Routes#smallFootBox {
+//   display: flex;
+//   width: 200px;
+//   height: 120px;
+// }
+
 
 ## Product Routes
 
