@@ -4,20 +4,50 @@ const knex = require('../database/index');
 
 router.get('/', (req, res) => {
   return knex
-    .raw('SELECT * FROM products')
+    .select('*')
+    .from('products')
     .then((products) => {
+      let returnObj = { rows: products };
       res.status(200);
 
-      return res.render('./templates/products/index', products);
+      return res.render('./templates/products/index', returnObj);
     })
     .catch((err) => {
       res.send(err);
     });
 });
+
+// new route
+
 router.get('/new', (req, res) => {
   res.status(200);
   return res.render('./templates/products/new');
 });
+
+// edit route
+router.get('/:product_id/edit', (req, res) => {
+  let productId = req.params.product_id;
+  return knex
+    .select('*')
+    .from('products')
+    .where({ id: productId })
+    .then((product) => {
+      if (!product) {
+        res.status(404);
+        throw `{PRODUCT NOT FOUND}`;
+      }
+      return product;
+    })
+    .then((product) => {
+      res.status(200);
+      return res.render('./templates/products/edit', product[0]);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+// get product id
 
 router.get('/:product_id', (req, res) => {
   let productId = req.params.product_id;
@@ -35,7 +65,6 @@ router.get('/:product_id', (req, res) => {
     .then((product) => {
       res.status(200);
       return res.render('./templates/products/product', product[0]);
-      // res.send(product[0]);
     })
     .catch((err) => {
       res.send(err);
@@ -82,45 +111,54 @@ router.post('/', (req, res) => {
 
 router.put('/:product_id', (req, res) => {
   let inputData = req.body;
-  let productId = req.params.product_id;
   return knex
-    .raw('SELECT * FROM products WHERE id = ?', [productId])
+    .select('name')
+    .from('products')
+    .where({ name: inputData.name })
     .then((product) => {
-      if (!product || !product.rowCount) {
-        res.status(404);
-        throw `{Product NOT FOUND}`;
+      if (product || product.rowCount) {
+        return knex('products')
+          .update({
+            name: inputData.name,
+            price: inputData.price,
+            inventory: inputData.inventory,
+          })
+          .returning('*');
       }
-      return knex.raw(
-        `UPDATE products SET title = ?, description = ?, inventory = ?, price = ?  WHERE id = ? RETURNING *`,
-        [inputData.title, inputData.description, inputData.inventory, inputData.price, product.rows[0].id],
-      );
+      res.status(400);
+      throw `{product doesnt EXIST}`;
     })
-    .then((newProduct) => {
+    .then((madeProduct) => {
       res.status(200);
-      res.send(newProduct.rows);
+      return res.redirect(`/products/${madeProduct[0].id}`);
     })
     .catch((err) => {
-      res.send(err);
+      res.send('ERR' + err);
     });
 });
 
 router.delete('/:product_id', (req, res) => {
+  let inputData = req.body;
   let productId = req.params.product_id;
   return knex
-    .raw('SELECT * FROM products WHERE id = ?', [productId])
+    .select('id')
+    .from('products')
+    .where({ id: productId })
     .then((product) => {
       if (!product || !product.rowCount) {
-        res.status(404);
-        throw `{product NOT FOUND}`;
+        return knex('products')
+          .where({ id: productId })
+          .del();
       }
-      return knex.raw(`DELETE FROM products WHERE id = ? RETURNING *`, [productId]);
+      res.status(400);
+      throw `{product EXISTS}`;
     })
-    .then((newPass) => {
+    .then((madeProduct) => {
       res.status(200);
-      res.send(`product ${productId} has been deleted`);
+      return res.redirect(`/products`);
     })
     .catch((err) => {
-      res.send(err);
+      res.send('ERR' + err);
     });
 });
 
